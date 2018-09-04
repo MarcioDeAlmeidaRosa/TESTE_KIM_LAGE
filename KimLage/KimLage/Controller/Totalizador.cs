@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using LINQtoCSV;
 using System.Linq;
 using KimLage.Data;
@@ -16,6 +17,10 @@ namespace KimLage.Controller
                 var mainExecutation = Stopwatch.StartNew();
                 try
                 {
+                    if (!File.Exists(System.Configuration.ConfigurationManager.AppSettings["arquivoOperacoes"]))
+                        throw new Exception("Arquivo de operações não encontrado, edite o arquivo de configuração");
+                    if (!File.Exists(System.Configuration.ConfigurationManager.AppSettings["arquivoDadosMercado"]))
+                        throw new Exception("Arquivo de operações não encontrado, edite o arquivo de configuração");
                     var listaOperacoes = loadFileCSV.CarregarArquivo<Operacao>(System.Configuration.ConfigurationManager.AppSettings["arquivoOperacoes"]);
                     var listaMercado = loadFileCSV.CarregarArquivo<Mercado>(System.Configuration.ConfigurationManager.AppSettings["arquivoDadosMercado"]);
                     var resul = (from operacao in listaOperacoes
