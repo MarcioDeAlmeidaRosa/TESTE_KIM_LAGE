@@ -5,8 +5,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace KimLage.Tools
-{
-    //https://www.codeproject.com/Articles/25133/LINQ-to-CSV-library
+{   
     public class LoadFileCSV : IDisposable
     {
         private CsvFileDescription inputFileDescription = null;
