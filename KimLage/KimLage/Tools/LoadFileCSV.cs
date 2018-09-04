@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace KimLage.Tools
 {
     //https://www.codeproject.com/Articles/25133/LINQ-to-CSV-library
-    public class LoadFileCSV: IDisposable
+    public class LoadFileCSV : IDisposable
     {
         private CsvFileDescription inputFileDescription = null;
 
@@ -15,7 +15,7 @@ namespace KimLage.Tools
         {
             inputFileDescription = new CsvFileDescription
             {
-                SeparatorChar = ';',//TODO - CONFIGURAR SEPARADOR
+                SeparatorChar = Convert.ToChar(System.Configuration.ConfigurationManager.AppSettings["separadorCampos"]),
                 FirstLineHasColumnNames = true,
                 IgnoreUnknownColumns = true
             };
@@ -42,6 +42,11 @@ namespace KimLage.Tools
             intermediario.Stop();
             Console.WriteLine("Total da leitura das {2} {0} para {1} registro(s)", intermediario.Elapsed, list.Count, typeof(T).ToString());
             return list;
+        }
+
+        public void Save<T>(IList<T> lista) where T : class, new()
+        {
+            new CsvContext().Write(lista, System.Configuration.ConfigurationManager.AppSettings["arquivoFinal"], inputFileDescription);
         }
     }
 }
